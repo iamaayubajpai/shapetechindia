@@ -4,12 +4,32 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Mobile nav */
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.main-nav');
+  const headerEl = document.querySelector('.site-header');
+
+  function syncHeaderHeight() {
+    if (headerEl) {
+      document.documentElement.style.setProperty('--header-h', headerEl.offsetHeight + 'px');
+    }
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize', syncHeaderHeight);
+  window.addEventListener('orientationchange', syncHeaderHeight);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(syncHeaderHeight);
+  }
+
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
+      syncHeaderHeight();
       nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', nav.classList.contains('open'));
+      const isOpen = nav.classList.contains('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      document.body.style.overflow = '';
+    }));
   }
 
   /* Sticky header shrink + scroll progress + back to top */
