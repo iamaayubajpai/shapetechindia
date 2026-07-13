@@ -62,14 +62,19 @@
       <div class="eyebrow"><span></span>REQUEST A QUOTATION</div>
       <h2>Tell us about your project.</h2>
       <p>Share a few details and our estimation team will revert with a detailed quotation, typically within 48 hours.</p>
-      <form data-demo-form>
+      <form data-web3forms>
+        <input type="hidden" name="access_key" value="0ed73009-39e7-4dd8-9481-aeeb81429624">
+        <input type="hidden" name="subject" value="New Quote Request — ShapeTech India Contractors">
+        <input type="hidden" name="from_name" value="ShapeTech India Website">
+        <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+
         <div class="form-grid">
-          <div class="form-field"><label>Full Name *</label><input type="text" required></div>
-          <div class="form-field"><label>Company / Organisation</label><input type="text"></div>
-          <div class="form-field"><label>Phone Number *</label><input type="tel" required></div>
-          <div class="form-field"><label>Email Address *</label><input type="email" required></div>
+          <div class="form-field"><label>Full Name *</label><input type="text" name="full_name" required></div>
+          <div class="form-field"><label>Company / Organisation</label><input type="text" name="company"></div>
+          <div class="form-field"><label>Phone Number *</label><input type="tel" name="phone" required></div>
+          <div class="form-field"><label>Email Address *</label><input type="email" name="email" required></div>
           <div class="form-field"><label>Project Type *</label>
-            <select required>
+            <select name="project_type" required>
               <option value="">Select project type</option>
               <option>Residential Construction</option>
               <option>Commercial Construction</option>
@@ -81,21 +86,22 @@
               <option>Other</option>
             </select>
           </div>
-          <div class="form-field"><label>Project Location *</label><input type="text" required></div>
+          <div class="form-field"><label>Project Location *</label><input type="text" name="location" required></div>
         </div>
         <div class="form-field"><label>Estimated Budget</label>
-          <select><option value="">Select a range</option><option>Under ₹10 Lakh</option><option>₹10 Lakh &ndash; ₹1 Crore</option><option>₹1 Crore &ndash; ₹10 Crore</option><option>Above ₹10 Crore</option></select>
+          <select name="budget"><option value="">Select a range</option><option>Under ₹10 Lakh</option><option>₹10 Lakh &ndash; ₹1 Crore</option><option>₹1 Crore &ndash; ₹10 Crore</option><option>Above ₹10 Crore</option></select>
         </div>
-        <div class="form-field"><label>Project Details / Message *</label><textarea rows="4" required></textarea></div>
+        <div class="form-field"><label>Project Details / Message *</label><textarea name="message" rows="4" required></textarea></div>
         <div class="form-grid">
-          <div class="form-field"><label>Upload Drawing (optional)</label><div class="upload-box">Click or drag a DWG / image file here</div></div>
-          <div class="form-field"><label>Upload PDF (optional)</label><div class="upload-box">Click or drag a PDF file here</div></div>
+          <div class="form-field"><label>Upload Drawing (optional)</label><div class="upload-box">Click or drag a DWG / image file here<br><span style="font-size:11px; opacity:.7;">(Note: attach files via email reply for now)</span></div></div>
+          <div class="form-field"><label>Upload PDF (optional)</label><div class="upload-box">Click or drag a PDF file here<br><span style="font-size:11px; opacity:.7;">(Note: attach files via email reply for now)</span></div></div>
         </div>
         <div class="form-field">
           <label>Verification: <span id="captcha-q" style="font-family:var(--font-mono); color:var(--orange-dark);"></span></label>
           <input type="number" id="captcha-a" required placeholder="Enter the sum">
         </div>
         <button type="submit" class="btn btn-primary btn-block">Submit Enquiry</button>
+        <p class="form-error" style="display:none; margin-top:16px; color:#C0392B; font-weight:600;">&#9888; Something went wrong sending your enquiry. Please call or WhatsApp us directly.</p>
         <p class="form-success" style="display:none; margin-top:16px; color:var(--blue); font-weight:600;">&#10003; Your enquiry has been received. Our team will contact you shortly.</p>
       </form>
     </div>
@@ -172,7 +178,7 @@
       <div>
         <h4>Stay Updated</h4>
         <p style="font-size:13.5px;">Subscribe for project updates, tender alerts and company news.</p>
-        <form class="newsletter-form" data-demo-form onsubmit="event.preventDefault(); this.reset(); alert('Subscribed! Thank you.');">
+        <form class="newsletter-form" onsubmit="event.preventDefault(); this.reset(); alert('Subscribed! Thank you.');">
           <input type="email" placeholder="Your email address" required>
           <button type="submit">Join</button>
         </form>

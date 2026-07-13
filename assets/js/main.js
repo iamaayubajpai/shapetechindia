@@ -156,6 +156,55 @@ document.addEventListener('DOMContentLoaded', () => {
     captchaQ.dataset.answer = a + b;
   }
 
+  /* Real form submission via Web3Forms (sends an actual email) */
+  document.querySelectorAll('form[data-web3forms]').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const captcha = form.querySelector('#captcha-a');
+      const captchaQEl = form.querySelector('#captcha-q');
+      if (captcha && captchaQEl && parseInt(captcha.value, 10) !== parseInt(captchaQEl.dataset.answer, 10)) {
+        alert('Please solve the verification sum correctly before submitting.');
+        return;
+      }
+
+      const successNote = form.querySelector('.form-success');
+      const errorNote = form.querySelector('.form-error');
+      if (successNote) successNote.style.display = 'none';
+      if (errorNote) errorNote.style.display = 'none';
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalLabel = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending...'; }
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: formData
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          form.reset();
+          if (successNote) {
+            successNote.style.display = 'block';
+            successNote.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          if (errorNote) errorNote.style.display = 'block';
+          else alert('Something went wrong sending your enquiry. Please call or WhatsApp us directly.');
+        }
+      } catch (err) {
+        if (errorNote) errorNote.style.display = 'block';
+        else alert('Network error — please call or WhatsApp us directly.');
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
+      }
+    });
+  });
+
   /* Form submit (demo — no backend) */
   document.querySelectorAll('form[data-demo-form]').forEach(form => {
     form.addEventListener('submit', (e) => {
